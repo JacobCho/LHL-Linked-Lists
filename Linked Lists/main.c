@@ -21,26 +21,22 @@ void printNodes(Node *head);
 Node * nodeSearch(int value, Node *head);
 void insertNode(int value, Node *head);
 void removeNode(int value, Node *head);
+Node * newNode(int value);
+void deleteList(Node *head);
 
 int main(int argc, const char * argv[]) {
     
-    Node firstNode;
-    firstNode.value = 1;
+    Node firstNode = *newNode(1);
     
-    Node secNode;
-    secNode.value = 2;
+    Node secNode = *newNode(2);
     
-    Node thirdNode;
-    thirdNode.value = 3;
+    Node thirdNode = *newNode(3);
     
-    Node forthNode;
-    forthNode.value = 4;
+    Node forthNode =  *newNode(4);
     
-    Node fifthNode;
-    fifthNode.value = 5;
+    Node fifthNode = *newNode(5);
     
-    Node sixthNode;
-    sixthNode.value = 6;
+    Node sixthNode = *newNode(6);
     
     firstNode.next = &secNode;
     secNode.next = &thirdNode;
@@ -55,10 +51,14 @@ int main(int argc, const char * argv[]) {
     
     printf("Value of node search: %d\n", nodeToFind->value);
     
-//    insertNode(7, &firstNode);
-//    printNodes(&firstNode);
+    insertNode(7, &firstNode);
     
-    removeNode(4, &firstNode);
+    printNodes(&firstNode);
+    
+    removeNode(2, &firstNode);
+    printNodes(&firstNode);
+    
+    deleteList(&firstNode);
     printNodes(&firstNode);
     
     return 0;
@@ -68,9 +68,13 @@ void printNodes(Node *head) {
     
     Node *current = head;
     
+    printf("%d\n",current->value);
+    
     while (current->next != NULL) {
-        printf("%d\n",current->value);
         current = current->next;
+        int n = current->value;
+        printf("%d\n",n);
+        
     }
     printf("%d\n",current->value);
     
@@ -99,11 +103,9 @@ void insertNode(int value, Node *head) {
         
     }
     
-    Node lastNode;
-    Node *newNode = &lastNode;
-    newNode->value = value;
-    newNode->next = NULL;
-    current->next = newNode;
+    current->next = newNode(value);
+    
+    
 }
 
 void removeNode(int value, Node *head) {
@@ -119,4 +121,31 @@ void removeNode(int value, Node *head) {
     prev->next = current->next;
     
     current->next = NULL;
+}
+
+Node * newNode(int value) {
+    
+    Node newNode;
+    newNode.value = value;
+    
+    Node * result = &newNode;
+    
+    return result;
+    
+}
+
+void deleteList(Node *head) {
+    
+    Node *current = head;
+    Node *next = head;
+    
+    while (current->next != NULL) {
+        next = current->next;
+        current->next = NULL;
+        current->value = NULL;
+        current = next;
+    }
+    
+    current->next = NULL;
+    current->value = NULL;
 }
