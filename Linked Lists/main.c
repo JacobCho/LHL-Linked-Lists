@@ -55,9 +55,10 @@ int main(int argc, const char * argv[]) {
     
     printf("Value of node search: %d\n", nodeToFind->value);
     
-    insertNode(7, &firstNode);
-    printNodes(&firstNode);
+//    insertNode(7, &firstNode);
+//    printNodes(&firstNode);
     
+    removeNode(4, &firstNode);
     printNodes(&firstNode);
     
     return 0;
@@ -115,10 +116,7 @@ void removeNode(int value, Node *head) {
         current = current->next;
     }
     
-    prev->next = current->next->next;
+    prev->next = current->next;
     
-    
-
-    
-    
+    current->next = NULL;
 }
