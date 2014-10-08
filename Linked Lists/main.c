@@ -17,7 +17,7 @@ struct Node {
 
 typedef struct Node Node;
 
-void printNodes(Node node);
+void printNodes(Node *head);
 Node * nodeSearch(int value, Node *head);
 void insertNode(int value, Node *head);
 void removeNode(int value, Node *head);
@@ -49,25 +49,29 @@ int main(int argc, const char * argv[]) {
     fifthNode.next = &sixthNode;
     sixthNode.next = NULL;
     
-    printNodes(firstNode);
+    printNodes(&firstNode);
     
     Node *nodeToFind = nodeSearch(5, &firstNode);
     
     printf("Value of node search: %d\n", nodeToFind->value);
     
-    insertNode(6, &firstNode);
-    printNodes(firstNode);
+    insertNode(7, &firstNode);
+    printNodes(&firstNode);
+    
+    printNodes(&firstNode);
     
     return 0;
 }
 
-void printNodes(Node node) {
+void printNodes(Node *head) {
     
-    while (node.next != NULL) {
-        printf("%d\n",node.value);
-        node = *node.next;
+    Node *current = head;
+    
+    while (current->next != NULL) {
+        printf("%d\n",current->value);
+        current = current->next;
     }
-    printf("%d\n",node.value);
+    printf("%d\n",current->value);
     
 }
 
@@ -104,11 +108,17 @@ void insertNode(int value, Node *head) {
 void removeNode(int value, Node *head) {
     
     Node *current = head;
+    Node *prev = head;
     
     while (current->value != value) {
+        prev = current;
         current = current->next;
     }
     
+    prev->next = current->next->next;
+    
+    
+
     
     
 }
